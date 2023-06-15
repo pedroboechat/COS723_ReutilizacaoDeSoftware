@@ -44,16 +44,21 @@
             <v-card
               :id="subject.code"
               :key="subject.code"
-              variant="tonal"
               :color="getCoursesColors(subject.code)"
               width="200px"
               height="140px"
-              @click.stop="clickAction($event, subject.code)"
+              @click.stop="clickAction($event, subject)"
             >
-              <v-card-title style="text-align: center">
+              <v-card-title style="text-align: center; color: black !important">
                 {{ subject.code }}
               </v-card-title>
-              <v-card-item style="text-align: center; padding: 8px">
+              <v-card-item
+                style="
+                  text-align: center;
+                  padding: 8px;
+                  color: black !important;
+                "
+              >
                 {{ subject.name }}
               </v-card-item>
             </v-card>
@@ -61,6 +66,27 @@
         </v-col>
       </v-row>
     </v-col>
+    <v-overlay :model-value="overlay" class="align-center justify-center">
+      <v-col>
+        <v-row>
+          <v-card style="height: 500px; width: 500px">
+            <v-card-title>
+              {{ overlayTitle }}
+            </v-card-title>
+            <v-card-item>
+              <b>Ementa:</b>
+              <p>{{ overlayEmenta }}</p>
+              <br />
+              <b>Último semestre oferecida:</b>
+              <p>{{ overlayUltimoSemestre }}</p>
+              <br />
+              <b>Requisitos:</b>
+              <p>{{ overlayRequisitos }}</p>
+            </v-card-item>
+          </v-card>
+        </v-row>
+      </v-col>
+    </v-overlay>
   </v-container>
 </template>
 
@@ -84,6 +110,8 @@
 //   ];
 // };
 
+// import LeaderLine from "leader-line-vue";
+
 const fluxogramaData = ref(null);
 const toggle = ref("detail");
 const colors = [
@@ -95,10 +123,14 @@ const colors = [
   "#ffee59",
   "#5659fc",
   "#ff19d5",
-  "#000000",
 ];
 const selectedColor = ref(null);
 const coursesColors = ref({});
+const overlay = ref(false);
+const overlayTitle = ref("");
+const overlayEmenta = ref("");
+const overlayUltimoSemestre = ref("");
+const overlayRequisitos = ref("");
 
 // Props do componente
 const props = defineProps({
@@ -129,12 +161,16 @@ function getCoursesColors(code) {
 
 // const getCoursesColors = computed((x) => colors[x]);
 
-function clickAction(_event, code) {
+function clickAction(_event, subject) {
   if (toggle.value === "detail") {
-    console.log("Detail");
+    overlayTitle.value = `${subject.code} - ${subject.name}`;
+    overlayEmenta.value = `Ementa para a matéria ${subject.name}.`;
+    overlayUltimoSemestre.value = `2022/2 - ${subject.name}`;
+    overlayRequisitos.value = `Requisitos da matéria ${subject.name}`;
+    overlay.value = !overlay.value;
   } else if (toggle.value === "paint") {
-    coursesColors.value[code] =
-      coursesColors.value[code] === selectedColor.value
+    coursesColors.value[subject.code] =
+      coursesColors.value[subject.code] === selectedColor.value
         ? null
         : selectedColor.value;
   }
@@ -161,6 +197,22 @@ watch(
   },
   { immediate: true }
 );
+
+// watch(overlay, (val) => {
+//   val &&
+//     setTimeout(() => {
+//       overlay.value = false;
+//     }, 3000);
+// });
+
+// onUpdate(() => {
+//   if (process.client) {
+//     LeaderLine.setLine(
+//       this.$refs.getElementById("COS110"),
+//       document.getElementById("COS111")
+//     );
+//   }
+// });
 </script>
 
 <style scoped>
