@@ -43,10 +43,12 @@
           >
             <v-card
               :id="subject.code"
+              :key="subject.code"
               variant="tonal"
-              color="red"
+              :color="getCoursesColors(subject.code)"
               width="200px"
               height="140px"
+              @click.stop="clickAction($event, subject.code)"
             >
               <v-card-title style="text-align: center">
                 {{ subject.code }}
@@ -96,6 +98,7 @@ const colors = [
   "#000000",
 ];
 const selectedColor = ref(null);
+const coursesColors = ref({});
 
 // Props do componente
 const props = defineProps({
@@ -113,6 +116,27 @@ function changeSelectedColor() {
     selectedColor.value = 0;
   } else {
     selectedColor.value++;
+  }
+}
+
+function getCoursesColors(code) {
+  const colorId = coursesColors.value[code];
+  if (colorId === undefined || colorId === null) {
+    return null;
+  }
+  return colors[colorId];
+}
+
+// const getCoursesColors = computed((x) => colors[x]);
+
+function clickAction(_event, code) {
+  if (toggle.value === "detail") {
+    console.log("Detail");
+  } else if (toggle.value === "paint") {
+    coursesColors.value[code] =
+      coursesColors.value[code] === selectedColor.value
+        ? null
+        : selectedColor.value;
   }
 }
 
