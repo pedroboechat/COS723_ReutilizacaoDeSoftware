@@ -1,3 +1,4 @@
+version: "3.8"
 services:
   frontend:
     build:
@@ -12,6 +13,9 @@ services:
       - "$FRONTEND_PORT:$FRONTEND_PORT"
     volumes:
       - "./frontend:/srv/app"
+    networks:
+      - flowchart
+
   backend:
     build:
       context: "./backend"
@@ -27,3 +31,8 @@ services:
       - "$BACKEND_PORT:$BACKEND_PORT"
     volumes:
       - "./backend:/srv/app"
+    networks:
+      - flowchart
+
+networks:
+  flowchart:
