@@ -13,7 +13,7 @@
     </v-main>
 
     <v-footer app border>
-      This is a footer! @ {{ new Date().getFullYear() }}
+      Made by Boechat and BDantas! @{{ new Date().getFullYear() }}
     </v-footer>
   </v-app>
 </template>
