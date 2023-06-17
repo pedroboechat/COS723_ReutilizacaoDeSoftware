@@ -28,9 +28,9 @@
           :key="semester.id"
           class="flex-grow-0 mr-5"
         >
-          <v-row style="margin-bottom: 10px" justify="start">
-            <v-card width="200px" color="black">
-              <v-card-title style="text-align: center">
+          <v-row style="margin-bottom: 5px" justify="start">
+            <v-card width="120px" color="black">
+              <v-card-title style="text-align: center; font-size: 16px;">
                 {{ semester.name }}
               </v-card-title>
             </v-card>
@@ -39,17 +39,17 @@
             v-for="subject in semester.subjects"
             :key="subject.code"
             justify="start"
-            style="margin-bottom: 10px"
+            style="margin-bottom: 5px"
           >
             <v-card
               :id="subject.code"
               :key="subject.code"
               :color="getCoursesColors(subject.code)"
-              width="200px"
+              width="120px"
               height="140px"
               @click.stop="clickAction($event, subject)"
             >
-              <v-card-title style="text-align: center; color: black !important">
+              <v-card-title style="text-align: center; color: black !important; font-size: 14px;">
                 {{ subject.code }}
               </v-card-title>
               <v-card-item
@@ -57,6 +57,7 @@
                   text-align: center;
                   padding: 8px;
                   color: black !important;
+                  font-size: 12px;
                 "
               >
                 {{ subject.name }}
@@ -110,8 +111,6 @@
 //   ];
 // };
 
-// import LeaderLine from "leader-line-vue";
-
 const fluxogramaData = ref(null);
 const toggle = ref("detail");
 const colors = [
@@ -159,8 +158,6 @@ function getCoursesColors(code) {
   return colors[colorId];
 }
 
-// const getCoursesColors = computed((x) => colors[x]);
-
 function clickAction(_event, subject) {
   if (toggle.value === "detail") {
     overlayTitle.value = `${subject.code} - ${subject.name}`;
@@ -198,21 +195,6 @@ watch(
   { immediate: true }
 );
 
-// watch(overlay, (val) => {
-//   val &&
-//     setTimeout(() => {
-//       overlay.value = false;
-//     }, 3000);
-// });
-
-// onUpdate(() => {
-//   if (process.client) {
-//     LeaderLine.setLine(
-//       this.$refs.getElementById("COS110"),
-//       document.getElementById("COS111")
-//     );
-//   }
-// });
 </script>
 
 <style scoped>
