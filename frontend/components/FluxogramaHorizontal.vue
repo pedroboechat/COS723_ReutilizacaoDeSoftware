@@ -1,7 +1,7 @@
 <template>
   <v-container v-if="!!props.course">
     <v-col>
-      <v-row justify="center" class="mb-10">
+      <v-row justify="center" class="mb-5">
         <v-btn-toggle
           v-model="toggle"
           color="black"
@@ -46,7 +46,7 @@
               :key="subject.code"
               :color="getCoursesColors(subject.code)"
               width="120px"
-              height="140px"
+              height="120px"
               @click.stop="clickAction($event, subject)"
             >
               <v-card-title style="text-align: center; color: black !important; font-size: 14px;">
