@@ -7,17 +7,21 @@
           color="black"
           variant="tonal"
           divided
+          style="border: black 1px solid"
           mandatory
         >
           <v-btn
             icon="mdi-magnify"
             value="detail"
-            @click="selectedColor.value = null"
+            :color="null"
+            style="border-right: black 1px solid"
+            @click="selectedColor = null"
           ></v-btn>
           <v-btn
             icon="mdi-palette"
             value="paint"
             :color="colors[selectedColor]"
+            variant="flat"
             @click="changeSelectedColor"
           ></v-btn>
         </v-btn-toggle>
@@ -30,7 +34,7 @@
         >
           <v-row style="margin-bottom: 5px" justify="start">
             <v-card width="120px" color="black">
-              <v-card-title style="text-align: center; font-size: 16px;">
+              <v-card-title style="text-align: center; font-size: 16px">
                 {{ semester.name }}
               </v-card-title>
             </v-card>
@@ -49,7 +53,13 @@
               height="120px"
               @click.stop="clickAction($event, subject)"
             >
-              <v-card-title style="text-align: center; color: black !important; font-size: 14px;">
+              <v-card-title
+                style="
+                  text-align: center;
+                  color: black !important;
+                  font-size: 14px;
+                "
+              >
                 {{ subject.code }}
               </v-card-title>
               <v-card-item
@@ -194,7 +204,6 @@ watch(
   },
   { immediate: true }
 );
-
 </script>
 
 <style scoped>
