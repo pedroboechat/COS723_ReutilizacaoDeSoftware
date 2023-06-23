@@ -13,7 +13,7 @@
           <v-btn
             icon="mdi-magnify"
             value="detail"
-            :color="null"
+            variant="flat"
             style="border-right: black 1px solid"
             @click="selectedColor = null"
           ></v-btn>
