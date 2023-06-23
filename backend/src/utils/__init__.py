@@ -20,5 +20,13 @@ def get_prerequisites(prerequisites):
         for i in prerequisites
     ]
 
-def get_blocks():
-    return []
+def get_blocking_subjects(code, dataframe):
+    requisites_df = dataframe.explode("requisitos").dropna(subset=["requisitos"])
+    return requisites_df.loc[
+        requisites_df["requisitos"].str.startswith(code)
+    ]["codigo"].to_list()
+
+def get_syllabus(syllabus):
+    if pd.isna(syllabus):
+        return "Não cadastrada."
+    return syllabus

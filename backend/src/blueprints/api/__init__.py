@@ -11,7 +11,12 @@ from flask import (
 )
 
 # Local imports
-from src.utils import load_dataframe, get_prerequisites, get_blocks
+from src.utils import (
+    load_dataframe,
+    get_prerequisites,
+    get_blocking_subjects,
+    get_syllabus
+)
 
 # Create blueprint
 api_bp = Blueprint(
@@ -47,17 +52,17 @@ def api_get_courses(dataframe=dataframe) -> Response:
                     "name": semester,
                     "subjects": [
                         {
-                            "blockingCourses": get_blocks(subject["codigo"]),
+                            "blockingSubjects": get_blocking_subjects(subject["codigo"], course_df),
                             "name": subject["disciplina"],
                             "code": subject["codigo"],
-                            "credits": subject["credits"],
+                            "credits": subject["creditos"],
                             "hours": {
                                 "theoretical": subject["ch_teorica"],
                                 "practical": subject["ch_pratica"],
                                 "extension": subject["ch_extensao"]
                             },
                             "prerequisites": get_prerequisites(subject["requisitos"]),
-                            "syllabus": subject["ementa"]
+                            "syllabus": get_syllabus(subject["ementa"])
                         }
                         for _, subject in course_df.loc[
                             course_df["periodo"] == semester
