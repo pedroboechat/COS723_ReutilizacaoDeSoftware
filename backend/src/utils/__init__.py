@@ -11,3 +11,14 @@ def load_dataframe(kind: str = "csv", connection_path: (str | None) = None):
         return pd.read_excel(connection_path)
     else:
         raise ValueError(f"Invalid kind ({kind}).")
+
+def get_prerequisites(prerequisites):
+    if prerequisites == [""]:
+        return []
+    return [
+        i[:i.index(" (")].strip()
+        for i in prerequisites
+    ]
+
+def get_blocks():
+    return []
