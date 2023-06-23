@@ -80,7 +80,7 @@
     <v-overlay :model-value="overlay" class="align-center justify-center">
       <v-col>
         <v-row>
-          <v-card style="height: 500px; width: 500px">
+          <v-card style="height: 500px; width: 500px; overflow-y: auto">
             <v-card-title>
               {{ overlayTitle }}
             </v-card-title>
@@ -88,11 +88,25 @@
               <b>Ementa:</b>
               <p>{{ overlayEmenta }}</p>
               <br />
-              <b>Último semestre oferecida:</b>
-              <p>{{ overlayUltimoSemestre }}</p>
+              <b>Créditos:</b>
+              <p>{{ overlayCreditos }}</p>
+              <br />
+              <b>Quantidade de horas de aula:</b>
+              <p>{{ overlayHorasTeoricas }}</p>
+              <p>{{ overlayHorasPraticas }}</p>
+              <p>{{ overlayHorasExtensao }}</p>
               <br />
               <b>Requisitos:</b>
-              <p>{{ overlayRequisitos }}</p>
+              <p v-if="overlayRequisitos.length > 0">{{ overlayRequisitos }}</p>
+              <p v-else>Essa matéria não possui pré-requisitos.</p>
+              <br />
+              <b>Pré-requisito das matérias:</b>
+              <p v-if="overlayBloqueia.length > 0">
+                {{ overlayBloqueia }}
+              </p>
+              <p v-else>
+                Essa matéria não é pré-requisito de nenhuma outra matéria.
+              </p>
             </v-card-item>
           </v-card>
         </v-row>
@@ -135,11 +149,16 @@ const colors = [
 ];
 const selectedColor = ref(null);
 const coursesColors = ref({});
+const coursesPrerequisites = ref({});
 const overlay = ref(false);
 const overlayTitle = ref("");
 const overlayEmenta = ref("");
-const overlayUltimoSemestre = ref("");
+const overlayCreditos = ref("");
+const overlayHorasTeoricas = ref("");
+const overlayHorasPraticas = ref("");
+const overlayHorasExtensao = ref("");
 const overlayRequisitos = ref("");
+const overlayBloqueia = ref("");
 
 // Props do componente
 const props = defineProps({
@@ -171,9 +190,13 @@ function getCoursesColors(code) {
 function clickAction(_event, subject) {
   if (toggle.value === "detail") {
     overlayTitle.value = `${subject.code} - ${subject.name}`;
-    overlayEmenta.value = `Ementa para a matéria ${subject.name}.`;
-    overlayUltimoSemestre.value = `2022/2 - ${subject.name}`;
-    overlayRequisitos.value = `Requisitos da matéria ${subject.name}`;
+    overlayEmenta.value = `${subject.syllabus}`;
+    overlayCreditos.value = `${subject.credits}`;
+    overlayHorasTeoricas.value = `Teórica: ${subject.hours.theoretical}h`;
+    overlayHorasPraticas.value = `Prática: ${subject.hours.practical}h`;
+    overlayHorasExtensao.value = `Extensão: ${subject.hours.extension}h`;
+    overlayRequisitos.value = subject.prerequisites.join(", ");
+    overlayBloqueia.value = subject.blockingSubjects.join(", ");
     overlay.value = !overlay.value;
   } else if (toggle.value === "paint") {
     coursesColors.value[subject.code] =
