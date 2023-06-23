@@ -4,7 +4,7 @@
       <v-row justify="center" class="mb-5">
         <v-btn-toggle
           v-model="toggle"
-          color="black"
+          color="gray"
           variant="tonal"
           divided
           style="border: black 1px solid"
