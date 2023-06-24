@@ -14,7 +14,7 @@
       color="black"
       indeterminate
     ></v-progress-circular>
-    <FluxogramaHorizontal :course="courseSelection" />
+    <Fluxograma :course="courseSelection" />
   </v-container>
 </template>
 

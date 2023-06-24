@@ -80,7 +80,7 @@
     <v-overlay :model-value="overlay" class="align-center justify-center">
       <v-col>
         <v-row>
-          <v-card style="height: 500px; width: 500px; overflow-y: auto">
+          <v-card style="height: 600px; width: 800px; overflow-y: auto">
             <v-card-title>
               {{ overlayTitle }}
             </v-card-title>
@@ -117,23 +117,6 @@
 
 <script setup lang="ts">
 // @ts-nocheck
-// Tipagem do JSON das matérias de um curso
-// type SubjectData = {
-//   course: string;
-//   semesters: [
-//     {
-//       id: number;
-//       name: string;
-//       subjects: [
-//         {
-//           name: string;
-//           code: string;
-//           credits: number;
-//         }
-//       ];
-//     }
-//   ];
-// };
 
 const fluxogramaData = ref(null);
 const toggle = ref("detail");
@@ -230,7 +213,7 @@ watch(
 </script>
 
 <style scoped>
-.foo {
+.prerequisite {
   color: aliceblue;
 }
 </style>

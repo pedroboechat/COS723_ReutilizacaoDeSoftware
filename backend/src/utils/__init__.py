@@ -6,11 +6,21 @@ def load_dataframe(kind: str = "csv", connection_path: (str | None) = None):
     if isinstance(connection_path, type(None)):
         raise ValueError("Invalid connection_path (None).")
     if kind == "csv":
-        return pd.read_csv(connection_path, sep=";")
+        df = pd.read_csv(connection_path, sep=";")
     elif kind == "excel":
-        return pd.read_excel(connection_path)
+        df = pd.read_excel(connection_path)
     else:
         raise ValueError(f"Invalid kind ({kind}).")
+    df["requisitos"] = df["requisitos"].apply(eval)
+    return df.loc[
+        df["curso_id"].isin(
+            df[["curso", "curso_id"]]
+            .drop_duplicates()
+            .drop_duplicates("curso", keep="last")
+            ["curso_id"]
+        )
+    ]
+
 
 def get_prerequisites(prerequisites):
     if prerequisites == [""]:
